@@ -1,8 +1,8 @@
-const VERSION: string = "typepki-strconv 0.1.0 kjur.github.io/typepki-strconv";
+const VERSION: string = "typepki-strconv 0.2.0 kjur.github.io/typepki-strconv";
 export { VERSION };
 
-import { BAtohex, BAtos, stoBA, stohex } from "./conv_ba.mts";
-export { stohex, BAtohex, stoBA, BAtos };
+import { BAtohex, BAtos, hextoBA, stoBA, stohex } from "./conv_ba.mts";
+export { stohex, BAtohex, hextoBA, stoBA, BAtos };
 
 import {
   Dictionary,

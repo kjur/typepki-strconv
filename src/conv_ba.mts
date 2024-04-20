@@ -11,8 +11,11 @@ export function stohex(s: string): string {
 
 /**
  * convert an array of bytes(Number) to hexadecimal string.
- * @param a - a array of bytes
+ * @param a - an array of byte
  * @return hexadecimal string
+ * @see {@link hextoBA}
+ * @example
+ * hextoBA([97, 97, 97]) -> "616161"
  */
 export function BAtohex(a: Array<number>): string {
   let s = "";
@@ -22,6 +25,22 @@ export function BAtohex(a: Array<number>): string {
     s = s + hex1;
   }
   return s;
+}
+
+/**
+ * convert an hexadecimal string to array of numbers.
+ * @param h - a hexadecimal string
+ * @return array of numbers
+ * @see {@link BAtohex}
+ * @example
+ * hextoBA("616161") -> [97, 97, 97]
+ */
+export function hextoBA(h: string): Array<number> {
+  const a: Array<number> = [];
+  for (let i = 0; i < h.length; i += 2) {
+    a.push(parseInt(h.slice(i, i + 2), 16));
+  }
+  return a;
 }
 
 // ==== string / byte array ================================

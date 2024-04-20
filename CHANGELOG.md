@@ -1,5 +1,11 @@
 # ChangeLog
 
+## [0.2.0] - 2024-04-20
+
+### Added
+
+- function hextoBA
+
 ## [0.1.0] - 2024-04-14
 
 - initial beta release
