@@ -1,8 +1,8 @@
 {
   "name": "typepki-strconv",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "author": "Kenji Urushima <kenji.urushima@gmail.com>",
-  "description": "TypeScript string converters and utilities sub module for TypePKI library (beta)",
+  "description": "TypeScript string converters and utilities sub module for TypePKI library (alpha version)",
   "homepage": "https://kjur.github.io/typepki-strconv",
   "repository": {
     "type": "git",

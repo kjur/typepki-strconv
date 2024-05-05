@@ -1,5 +1,11 @@
 # ChangeLog
 
+## [0.3.0] - 2024-05-04
+
+### Added
+
+- function ishex
+
 ## [0.2.0] - 2024-04-20
 
 ### Added
