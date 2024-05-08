@@ -1,5 +1,11 @@
 # ChangeLog
 
+## [0.4.0] - 2024-05-08
+
+### Added
+
+- function isBase64, isBase64URL
+
 ## [0.3.0] - 2024-05-04
 
 ### Added
