@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test";
 
-import { encodeURIComponentAll, hextouricmp, uricmptohex } from "./index.mts";
+import { encodeURIComponentAll, hextouricmp, uricmptohex, hextoutf8 } from "./index.mts";
 
 test("uricmptohex", () => {
   expect(uricmptohex("%67%68")).toBe("6768");

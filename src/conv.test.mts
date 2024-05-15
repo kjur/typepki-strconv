@@ -12,6 +12,7 @@ import {
   hextob64,
   hextob64u,
   hextorstr,
+  hextoutf8,
   inttobitstr,
   namearraytobinstr,
   rstrtob64,
@@ -96,4 +97,14 @@ test("rstrtohex", () => {
 
 test("rstrtob64", () => {
   expect(rstrtob64("aaa")).toBe("YWFh");
+});
+
+// ==== hex / utf8 =====================================
+test("hextoutf8", () => {
+  expect(hextoutf8("616161")).toBe("aaa");
+  expect(hextoutf8("616161e38182e38184e38186")).toBe("aaaあいう");
+  expect(hextoutf8("e381bbe38192")).toBe("ほげ");
+  expect(() => {
+    hextoutf8("6161ff");
+  }).toThrow(/malformed hexadecimal UTF-8/);
 });

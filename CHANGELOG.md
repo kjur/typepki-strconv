@@ -1,5 +1,11 @@
 # ChangeLog
 
+## [0.5.0] - 2024-05-16
+
+### Updated
+
+- function hextoutf8 for strict UTF-8 string checking
+
 ## [0.4.0] - 2024-05-08
 
 ### Added

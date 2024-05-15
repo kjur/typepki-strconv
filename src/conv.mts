@@ -1,3 +1,5 @@
+import { hextouricmp } from "./conv_uricmp.mts";
+
 // ==== hex / base64 ======================================
 export function b64tohex(b64: string): string {
   return Buffer.from(b64, "base64").toString("hex");
@@ -5,6 +7,29 @@ export function b64tohex(b64: string): string {
 
 export function hextob64(hex: string): string {
   return Buffer.from(hex, "hex").toString("base64");
+}
+
+// ==== hex / utf8 ========================================
+/**
+ * convert hexadecimal string to UTF-8 string
+ * @param h - hexadecimal string
+ * @return UTF-8 string
+ * @throws Error if hexadecimal can't decoded as UTF-8 string
+ * @example
+ * hextoutf8("616263") -> "abc"
+ * hextoutf8("616161e38182e38184e38186") -> "aaaあいう"
+ * hextoutf8("6161ff") -> throws malformed error
+ */
+export function hextoutf8(h: string): string {
+  try {
+    return decodeURIComponent(hextouricmp(h));
+  } catch (ex) {
+    throw new Error("malformed hexadecimal UTF-8 string");
+  }
+}
+
+export function utf8tohex(u8: string): string {
+  return Buffer.from(u8, "utf8").toString("hex");
 }
 
 // ==== utf8 / base64 =====================================
@@ -24,16 +49,6 @@ export function b64utoutf8(b64u: string): string {
 export function utf8tob64u(u8: string): string {
   return b64tob64u(Buffer.from(u8, "utf8").toString("base64"));
 }
-
-// ==== hex / utf8 ========================================
-export function hextoutf8(hex: string): string {
-  return Buffer.from(hex, "hex").toString("utf8");
-}
-
-export function utf8tohex(u8: string): string {
-  return Buffer.from(u8, "utf8").toString("hex");
-}
-
 // ==== hex / base64u =====================================
 export function b64utohex(b64u: string): string {
   return b64tohex(b64utob64(b64u));
