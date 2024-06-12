@@ -1,7 +1,7 @@
 typepki-strconv: TypePKI string converters and utilities sub module for TypePKI library
 ====================================================================================
 
-[TOP](https://kjur.github.io/typepki-strconv/) | [github](https://github.com/kjur/typepki-strconv) | [npm](https://www.npmjs.com/package/typepki-strconv) | [TypePKI](https://kjur.github.com/typepki/) 
+[TOP](https://kjur.github.io/typepki-strconv/) | [github](https://github.com/kjur/typepki-strconv) | [npm](https://www.npmjs.com/package/typepki-strconv) | [TypePKI](https://kjur.github.io/typepki/) 
 
 The 'TypePKI' library is an opensource free TypeScript PKI library which is the successor of the long lived [jsrsasign](https://kjur.github.io/jsrsasign) library.
 

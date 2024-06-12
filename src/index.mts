@@ -101,3 +101,6 @@ export { ipv6tohex, hextoipv6, hextoip, iptohex, ipprefixlen, ipnetmask };
 
 import { ucs2hextoutf8 } from "./conv_ucs2.mts";
 export { ucs2hextoutf8 };
+
+import { hexpad } from "./hexutil.mts";
+export { hexpad };

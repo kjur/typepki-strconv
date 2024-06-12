@@ -1,5 +1,11 @@
 # ChangeLog
 
+## [0.6.0] - 2024-06-13
+
+### Added
+
+- function hexpad
+
 ## [0.5.0] - 2024-05-16
 
 ### Updated
