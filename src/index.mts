@@ -1,4 +1,4 @@
-const VERSION: string = "typepki-strconv 0.4.0 kjur.github.io/typepki-strconv";
+const VERSION: string = "typepki-strconv 0.7.0 kjur.github.io/typepki-strconv";
 export { VERSION };
 
 import { isBase64, isBase64URL, ishex } from "./checker.mts";
@@ -17,6 +17,7 @@ import {
   b64utohex,
   b64utoutf8,
   binstrtobitstr,
+  binstrtonamearray,
   bitstrtobinstr,
   hextob64,
   hextob64u,
@@ -47,6 +48,7 @@ export {
   hextorstr,
   rstrtohex,
   binstrtobitstr,
+  binstrtonamearray,
   bitstrtobinstr,
   inttobitstr,
   strpad,

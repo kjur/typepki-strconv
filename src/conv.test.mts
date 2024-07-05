@@ -9,6 +9,7 @@ import {
   b64utob64,
   b64utohex,
   binstrtobitstr,
+  binstrtonamearray,
   hextob64,
   hextob64u,
   hextorstr,
@@ -67,9 +68,15 @@ test("strpad", () => {
 });
 
 test("namearraytobinstr", () => {
-  const db: Dictionary<number> = { a: 0, b: 3, c: 8, d: 9, e: 17, f: 19 };
+  const db: Record<string, number> = { a: 0, b: 3, c: 8, d: 9, e: 17, f: 19 };
   expect(namearraytobinstr(["a", "c", "d"], db)).toBe("1000000011");
   expect(namearraytobinstr(["c", "b"], db)).toBe("000100001");
+});
+
+test("binstrtonamearray", () => {
+  const db: Record<string, number> = { a: 0, b: 3, c: 8, d: 9, e: 17, f: 19 };
+  expect(binstrtonamearray("100100001", db)).toEqual(["a", "b", "c"]);
+  expect(binstrtonamearray("00000000000000000001", db)).toEqual(["f"]);
 });
 
 test("aryval", () => {

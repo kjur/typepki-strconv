@@ -293,11 +293,14 @@ export interface Dictionary<Type> {
   [key: string]: Type;
 }
 
+// ==== namearray / binstr ================================
+
 /**
  * convert array of names to bit string
  * @param namearray array of name string
  * @param namedb associative array of name and value
  * @return binary string (ex. "110001")
+ * @see {@link binstrtonamearray}
  *
  * @description
  * This function converts from an array of names to
@@ -307,7 +310,7 @@ export interface Dictionary<Type> {
  * This function may be useful to implement ASN.1 BitString such as KeyUsage.
  *
  * @example
- * let db: Dictionary<number> = { a: 0, b: 3, c: 8, d: 9, e: 17, f: 19 };
+ * const db: Record<string, number> = { a: 0, b: 3, c: 8, d: 9, e: 17, f: 19 };
  * namearraytobinstr(['a', 'c', 'd'], db) -> '1000000011'
  * namearraytobinstr(['c', 'b'], db) -> '000100001'
  */
@@ -320,7 +323,7 @@ export interface Dictionary<Type> {
  */
 export function namearraytobinstr(
   namearray: Array<string>,
-  namedb: Dictionary<number>,
+  namedb: Record<string, number>,
 ): string {
   let d = 0;
   for (let i = 0; i < namearray.length; i++) {
@@ -333,6 +336,47 @@ export function namearraytobinstr(
     r += s[i];
   }
   return r;
+}
+
+/**
+ * convert bit string to array of names to
+ * @param binstr - binary string (ex. "1001")
+ * @param namedb associative array of name and index
+ * @return array of names
+ * @see {@link namearraytobinstr}
+ *
+ * @description
+ * This function converts from binary string to
+ * an array of names defined in namedb.
+ *
+ * @example
+ * const db: Record<string, number> = { a: 0, b: 3, c: 8, d: 9, e: 17, f: 19 };
+ * binstrtonamearray('1000000011', db) -> ['a', 'c', 'd']
+ * binstrtonamearray(''000100001', db) -> ['b', 'c']
+ *
+ * const db2: Record<string, number> = { "apple": 0, "orange": 1, "grape": 2, "mango", 3 };
+ * binstrtonamearray('0101', db2) -> ['orange', 'mango']
+ * binstrtonamearray('101', db2) -> ['apple', 'grape']
+ */
+export function binstrtonamearray(
+  binstr: string,
+  namedb: Record<string, number>
+): string[] {
+  const aKey: string[] = Object.keys(namedb);
+  //console.log("aKey=", aKey);
+  const aVal = aKey.map((k) => namedb[k]);
+  //console.log("aVal=", aVal);
+
+  const namedbrev: Record<string, string> = {};
+  Object.keys(namedb).map((k) => { namedbrev[namedb[k]] = k; });
+  //console.log("namedbrev=", JSON.stringify(namedbrev, null, 2));
+
+  let aResult: string[] = [];  
+  binstr.split('').map((k, idx) => {
+    if (k == '1') aResult.push(namedbrev[idx.toString()]);
+  });
+
+  return aResult;
 }
 
 /**
