@@ -360,7 +360,7 @@ export function namearraytobinstr(
  */
 export function binstrtonamearray(
   binstr: string,
-  namedb: Record<string, number>
+  namedb: Record<string, number>,
 ): string[] {
   const aKey: string[] = Object.keys(namedb);
   //console.log("aKey=", aKey);
@@ -368,12 +368,14 @@ export function binstrtonamearray(
   //console.log("aVal=", aVal);
 
   const namedbrev: Record<string, string> = {};
-  Object.keys(namedb).map((k) => { namedbrev[namedb[k]] = k; });
+  Object.keys(namedb).map((k) => {
+    namedbrev[namedb[k]] = k;
+  });
   //console.log("namedbrev=", JSON.stringify(namedbrev, null, 2));
 
-  let aResult: string[] = [];  
-  binstr.split('').map((k, idx) => {
-    if (k == '1') aResult.push(namedbrev[idx.toString()]);
+  const aResult: string[] = [];
+  binstr.split("").map((k, idx) => {
+    if (k === "1") aResult.push(namedbrev[idx.toString()]);
   });
 
   return aResult;

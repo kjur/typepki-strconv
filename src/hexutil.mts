@@ -7,5 +7,5 @@
  * hexpad("ab3c") -> "ab3c"
  */
 export function hexpad(s: string): string {
-  return (s.length % 2 === 1) ? `0${s}` : s;
+  return s.length % 2 === 1 ? `0${s}` : s;
 }

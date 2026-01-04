@@ -1,4 +1,4 @@
-const VERSION: string = "typepki-strconv 0.7.0 kjur.github.io/typepki-strconv";
+const VERSION: string = "typepki-strconv 0.8.0 kjur.github.io/typepki-strconv";
 export { VERSION };
 
 import { isBase64, isBase64URL, ishex } from "./checker.mts";
@@ -79,10 +79,19 @@ import {
   msectozulu,
   timetogen,
   zulutodate,
+  zulutoiso8601,
   zulutomsec,
   zulutosec,
 } from "./conv_zulu.mts";
-export { zulutomsec, msectozulu, zulutosec, zulutodate, datetozulu, timetogen };
+export {
+  zulutomsec,
+  msectozulu,
+  zulutosec,
+  zulutodate,
+  datetozulu,
+  timetogen,
+  zulutoiso8601,
+};
 
 import {
   encodeURIComponentAll,

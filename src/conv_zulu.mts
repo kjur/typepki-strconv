@@ -206,3 +206,37 @@ export function timetogen(s: string): string {
   }
   return s;
 }
+
+/**
+ * convert GeneralizedTime or UTCTime string to ISO8601 time string
+ * @param s - GeneralizedTime or UTCTime string (ex. 20170412235959Z)
+ * @return ISO8601 time string (ex. 2020-07-14T13:03:42Z)
+ * @since 0.8.0
+ *
+ * @example
+ * zulutoiso8601(  "071231235959Z") -> "2007-12-31T23:59:59Z"
+ * zulutoiso8601(  "971231235959Z") -> "1997-12-31T23:59:59Z"
+ * zulutoiso8601("20071231235959Z") -> "2007-12-31T23:59:59Z"
+ * zulutoiso8601( "0071231235959Z") -> raise error
+ * zulutoiso8601(     "aaaaaaaaaa") -> raise error
+ */
+export function zulutoiso8601(s: string): string {
+  const m = s.match(/^(\d{2,4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})Z$/);
+  if (!m) {
+    throw new Error(
+      "Invalid format: expected YYYYMMDDHHmmssZ or YYYYMMDDHHmmssZ",
+    );
+  }
+
+  const [, y, mm, dd, hh, min, ss] = m;
+  let y2: string = y;
+  if (y2.length === 2) {
+    if (parseInt(y2.slice(0, 1)) < 5) {
+      y2 = `20${y2}`;
+    } else {
+      y2 = `19${y2}`;
+    }
+  }
+
+  return `${y2}-${mm}-${dd}T${hh}:${min}:${ss}Z`;
+}

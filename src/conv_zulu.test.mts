@@ -4,6 +4,7 @@ import {
   datetozulu,
   msectozulu,
   zulutodate,
+  zulutoiso8601,
   zulutomsec,
   zulutosec,
 } from "./index.mts";
@@ -46,4 +47,18 @@ test("datetozulu", () => {
   expect(datetozulu(d)).toBe("20170520235959Z");
   expect(datetozulu(d, true)).toBe("170520235959Z");
   expect(datetozulu(d, false, true)).toBe("20170520235959.67Z");
+});
+
+test("zulutoiso8601", () => {
+  expect(zulutoiso8601("071231235959Z")).toBe("2007-12-31T23:59:59Z");
+  expect(zulutoiso8601("471231235959Z")).toBe("2047-12-31T23:59:59Z");
+  expect(zulutoiso8601("501231235959Z")).toBe("1950-12-31T23:59:59Z");
+  expect(zulutoiso8601("971231235959Z")).toBe("1997-12-31T23:59:59Z");
+  expect(zulutoiso8601("20071231235959Z")).toBe("2007-12-31T23:59:59Z");
+  expect(() => {
+    zulutoiso8601(" 0071231235959Z");
+  }).toThrow(/Invalid format/);
+  expect(() => {
+    zulutoiso8601("aaaaaaa");
+  }).toThrow(/Invalid format/);
 });
