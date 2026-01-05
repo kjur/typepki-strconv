@@ -211,7 +211,8 @@ export function timetogen(s: string): string {
  * convert GeneralizedTime or UTCTime string to ISO8601 time string
  * @param s - GeneralizedTime or UTCTime string (ex. 20170412235959Z)
  * @return ISO8601 time string (ex. 2020-07-14T13:03:42Z)
- * @since 0.8.0
+ * @see {@link iso8601tozulu}
+ * @since 0.9.0
  *
  * @example
  * zulutoiso8601(  "071231235959Z") -> "2007-12-31T23:59:59Z"
@@ -240,3 +241,43 @@ export function zulutoiso8601(s: string): string {
 
   return `${y2}-${mm}-${dd}T${hh}:${min}:${ss}Z`;
 }
+
+/**
+ * convert ISO8601 time string to GeneralizedTime or UTCTime string
+ * @param s - ISO8601 time string (ex. 2020-07-14T13:03:42Z)
+ * @param flagUTC - return UTCTime when this flag is true 
+ * @return GeneralizedTime or UTCTime string (ex. 20170412235959Z or 170412235959Z)
+ * @see {@link zulutoiso8601}
+ * @since 0.10.0
+ *
+ * @example
+ * iso8601tozulu("2007-12-31T23:59:59Z") -> "20071231235959Z"
+ * iso8601tozulu(          "aaaaaaaaaa") -> raise error
+ * iso8601tozulu("2007-12-31T23:59:59Z", true) -> "071231235959Z"
+ * iso8601tozulu("2107-12-31T23:59:59Z", true) -> raise error, year shall be from 1950 to 2049
+ */
+export function iso8601tozulu(
+  s: string,
+  flagUTC = false,
+): string {
+  const m = s.match(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})Z$/);
+  if (!m) {
+    throw new Error(
+      "Invalid format: expected YYYY-MM-DDTHH:mm:ssZ",
+    );
+  }
+
+  let [, yyyy, mm, dd, hh, min, ss] = m;
+  
+  let y :number = parseInt(yyyy);
+  if (flagUTC) {
+    if (1950 <= y && y <= 2049) {
+      yyyy = yyyy.slice(2, 4);
+    } else {
+      throw new Error(`Invalid year for UTCTime: ${yyyy}`);
+    }
+  }  
+
+  return `${yyyy}${mm}${dd}${hh}${min}${ss}Z`;
+}
+

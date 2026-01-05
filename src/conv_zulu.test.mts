@@ -2,7 +2,9 @@ import { describe, expect, test } from "bun:test";
 
 import {
   datetozulu,
+  iso8601tozulu,
   msectozulu,
+  timetogen,
   zulutodate,
   zulutoiso8601,
   zulutomsec,
@@ -49,6 +51,13 @@ test("datetozulu", () => {
   expect(datetozulu(d, false, true)).toBe("20170520235959.67Z");
 });
 
+test("timetogen", () => {
+  expect(timetogen(  "071231235959Z")).toBe("20071231235959Z");
+  expect(timetogen(  "971231235959Z")).toBe("19971231235959Z");
+  expect(timetogen("20071231235959Z")).toBe("20071231235959Z");
+  expect(timetogen(  "971231235959.123Z")).toBe("19971231235959.123Z");
+});
+
 test("zulutoiso8601", () => {
   expect(zulutoiso8601("071231235959Z")).toBe("2007-12-31T23:59:59Z");
   expect(zulutoiso8601("471231235959Z")).toBe("2047-12-31T23:59:59Z");
@@ -61,4 +70,16 @@ test("zulutoiso8601", () => {
   expect(() => {
     zulutoiso8601("aaaaaaa");
   }).toThrow(/Invalid format/);
+});
+
+test("iso8601tozulu", () => {
+  expect(iso8601tozulu("2007-12-31T23:59:59Z")).toBe("20071231235959Z");
+  expect(iso8601tozulu("2007-12-31T23:59:59Z", true)).toBe("071231235959Z");
+  expect(iso8601tozulu("1988-12-31T23:59:59Z", true)).toBe("881231235959Z");
+  expect(() => {
+    iso8601tozulu("aaa");
+  }).toThrow(/Invalid format/);
+  expect(() => {
+    iso8601tozulu("2107-12-31T23:59:59Z", true);
+  }).toThrow(/Invalid year for UTCTime/);
 });
