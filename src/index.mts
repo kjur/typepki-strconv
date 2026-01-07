@@ -1,4 +1,4 @@
-const VERSION: string = "typepki-strconv 0.10.0 kjur.github.io/typepki-strconv";
+const VERSION: string = "typepki-strconv 0.11.0 kjur.github.io/typepki-strconv";
 export { VERSION };
 
 import { isBase64, isBase64URL, ishex } from "./checker.mts";

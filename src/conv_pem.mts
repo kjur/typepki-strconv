@@ -26,6 +26,7 @@ export function hextopem(
   return `-----BEGIN ${pemHeader}-----${separator}${foldnl(
     hextob64(dataHex),
     64,
+    separator
   )}${separator}-----END ${pemHeader}-----${separator}`;
 }
 
@@ -56,28 +57,55 @@ export function pemtohex(s: string, sHead?: string): string {
  * get Base64 string from PEM format data
  * @param pem - PEM formatted string
  * @param sHead - PEM header string without BEGIN/END
- * @return Base64 string
+ * @return base64 string in the first PEM
  *
  * @description
  * This static method gets a Base64 string of contents
- * from PEM format data.
+ * from PEM format data. As for the "pem", some garbled text
+ * before and after the PEM header also be acceptable.
+ * When two or more PEMs are included, the first one will be
+ * returned.
  *
  * @example
  * pemtob64("-----BEGIN CERTIFICATE...", "CERTIFICATE") -> "MIIBvTCC..."
+ * pemtob64("-----BEGIN CERTIFICATE...", "CERTIFICATE") -> "MIIBvTCC..."
  * pemtob64("-----BEGIN CERTIFICATE...") -> "MIIBvTCC..."
+ * pem2 = `
+ * junk-text
+ * -----BEGIN FOO----
+ * YWFh
+ * -----BEGIN FOO----
+ * junk-text
+ * -----BEGIN BOO BOO----
+ * enp6
+ * -----BEGIN BOO BOO----
+ * junk-text
+ * `
+ * pemtob64(pem2) -> "YWFh"
  */
 export function pemtob64(pem: string, sHead?: string): string {
   let s: string = pem;
-  if (s.indexOf("-----BEGIN ") === -1) throw new Error("can't find PEM header");
 
   if (sHead !== undefined) {
-    s = s.replace(new RegExp(`^[^-]*-----BEGIN ${sHead}-----`), "");
-    s = s.replace(new RegExp(`-----END ${sHead}-----[^-]*$`), "");
+    const sBegin = `-----BEGIN ${sHead}-----`;
+    const sEnd = `-----END ${sHead}-----`;
+    let idx = s.indexOf(sBegin);
+    if (idx == -1) throw new Error("can't find PEM header");
+    s = s.slice(idx + sBegin.length);
+    idx = s.indexOf(sEnd);
+    s = s.slice(0, idx);
+    return s.replace(/\s+/g, "");
   } else {
-    s = s.replace(/^[^-]*-----BEGIN [^-]+-----/, "");
-    s = s.replace(/-----END [^-]+-----[^-]*$/, "");
+    const sBegin = `-----BEGIN `;
+    const sEnd = `-----END `;
+    let idx = s.indexOf(sBegin);
+    if (idx == -1) throw new Error("can't find PEM header");
+    s = s.slice(idx + sBegin.length);
+    s = s.replace(/^[0-9A-Za-z ]+-----/s, "");
+    idx = s.indexOf(sEnd);
+    s = s.slice(0, idx);
+    return s.replace(/\s+/g, "");
   }
-  return s.replace(/\s+/g, "");
 }
 
 // === others =========================
